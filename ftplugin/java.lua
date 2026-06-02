@@ -5,18 +5,19 @@ vim.opt.scrolloff = 8
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+local home = vim.fn.expand("~")
 
 local workspace_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local bundles = {
   vim.fn.glob(
-    '/home/amin_said/Java/Lsp/plugins/org.eclipse.jdt.core_*.jar',
+    home .. 'Java/Lsp/plugins/org.eclipse.jdt.core_*.jar',
     true),
   vim.fn.glob(
-    '/home/amin_said/nvimFunctionality/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar',
+    home .. 'nvimFunctionality/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar',
     true),
 }
 vim.list_extend(bundles,
-  vim.split(vim.fn.glob('/home/amin_said/nvimFunctionality/vscode-java-test/server/*.jar', true), '\n'))
+  vim.split(vim.fn.glob(home .. '/nvimFunctionality/vscode-java-test/server/*.jar', true), '\n'))
 
 local config = {
   cmd = { "java",
@@ -28,10 +29,10 @@ local config = {
     -- '-Xms1G',
     '-jar',
     vim.fn.glob(
-      '/home/amin_said/Java/Lsp/plugins/org.eclipse.equinox.launcher_*.jar'),
-    '-javaagent', "/home/amin_said/.config/nvim/lombok.jar",
-    '-configuration', '/home/amin_said/Java/Lsp/config_linux',
-    '-data', vim.fn.expand('/home/amin_said/workspace/Java/') .. workspace_dir,
+      home .. '/Java/Lsp/plugins/org.eclipse.equinox.launcher_*.jar'),
+    '-javaagent', home .. "/.config/nvim/lombok.jar",
+    '-configuration', home .. '/Java/Lsp/config_linux',
+    '-data', vim.fn.expand(home .. '/workspace/Java/') .. workspace_dir,
     "--add-modules=ALL-SYSTEM",
     "--add-opens", "java.base/java.util=ALL-UNNAMED",
     "--add-opens", "java.base/java.lang=ALL-UNNAMED",
@@ -48,7 +49,7 @@ local config = {
         settings = {
           -- Use Google Java style guidelines for formatting
           -- To use, make sure to download the file from https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml
-          url = "/home/amin_said/.config/nvim/eclipse-java-google-style.xml",
+          url = home .. "/.config/nvim/eclipse-java-google-style.xml",
           profile = "GoogleStyle",
         },
       },
